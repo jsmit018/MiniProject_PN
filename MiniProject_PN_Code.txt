@@ -1,0 +1,188 @@
+class PythonPlugin(PluginBase):
+  def main(self):
+    active_node = self.active_node
+    core = self.core
+    logger = self.logger
+    logger.debug('path: {0}'.format(core.get_path(active_node)))
+    logger.info('name: {0}'.format(core.get_attribute(active_node, 'name')))
+    logger.warn('pos : {0}'.format(core.get_registry(active_node, 'position')))
+    logger.error('guid: {0}'.format(core.get_guid(active_node)))
+    nodes = core.load_children(active_node)
+    petri_node_1 = PetriNode("entry parking lot", 10000, logger, 20)
+    petri_node_2 = PetriNode("ticket queue one", 100, logger, 5)
+    petri_node_3 = PetriNode("ticket queue two", 50, logger)
+    petri_node_4 = PetriNode("park entrance", 10000, logger, 50)
+    petri_node_5 = PetriNode("ride one", 10000, logger)
+    petri_node_6 = PetriNode("ride two", 10000, logger)
+    petri_node_7 = PetriNode("ride three", 10000, logger)
+    petri_node_8 = PetriNode("gift shop", 10000, logger)
+    petri_node_9 = PetriNode("entry parking lot", 10000, logger)
+    petri_node_10 = PetriNode("end node", 10000, logger)
+    transition_1 = Transition("parking to ticket")
+    transition_2 = Transition("ticket to entrance")
+    transition_3 = Transition("entrance to ride one")
+    transition_4 = Transition("entrance to ride two")
+    transition_5 = Transition("entrance to ride three")
+    transition_6 = Transition("rides to entrance")
+    transition_7 = Transition("entrance to shop")
+    transition_8 = Transition("shop to exit")
+    transition_9 = Transition("exit to finish")
+    arc_1 = Arc(1, petri_node_1, None)
+    arc_2 = Arc(3, None, petri_node_2)
+    arc_3 = Arc(1, None, petri_node_3)
+    arc_4 = Arc(1, petri_node_2, None)
+    arc_5 = Arc(1, petri_node_3, None)
+    arc_6 = Arc(1, None, petri_node_4)
+    arc_7 = Arc(1, petri_node_4, None)
+    arc_8 = Arc(1, petri_node_4, None)
+    arc_9 = Arc(1, petri_node_4, None)
+    arc_10 = Arc(1, petri_node_4, None)
+    arc_11 = Arc(4, None, petri_node_5)
+    arc_12 = Arc(2, petri_node_5, None)
+    arc_13 = Arc(2, None, petri_node_6)
+    arc_14 = Arc(1, None, petri_node_7)
+    arc_15 = Arc(1, petri_node_6, None)
+    arc_16 = Arc(1, petri_node_7, None)
+    arc_17 = Arc(1, None, petri_node_4)
+    arc_18 = Arc(1, None, petri_node_8)
+    arc_19 = Arc(1, petri_node_8, None)
+    arc_20 = Arc(1, None, petri_node_9)
+    arc_21 = Arc(1, petri_node_9, None)
+    arc_22 = Arc(1, None, petri_node_10)
+    transition_1.add_entry_arcs(arc_1)
+    transition_1.add_exit_arcs(arc_2)
+    transition_1.add_exit_arcs(arc_3)
+    transition_2.add_entry_arcs(arc_4)
+    transition_2.add_entry_arcs(arc_5)
+    transition_2.add_exit_arcs(arc_6)
+    transition_3.add_entry_arcs(arc_7)
+    transition_3.add_exit_arcs(arc_11)
+    transition_4.add_entry_arcs(arc_8)
+    transition_4.add_exit_arcs(arc_13)
+    transition_5.add_entry_arcs(arc_9)
+    transition_5.add_exit_arcs(arc_14)
+    transition_6.add_entry_arcs(arc_12)
+    transition_6.add_entry_arcs(arc_15)
+    transition_6.add_entry_arcs(arc_16)
+    transition_6.add_exit_arcs(arc_17)
+    transition_7.add_entry_arcs(arc_10)
+    transition_7.add_exit_arcs(arc_18)
+    transition_8.add_entry_arcs(arc_19)
+    transition_8.add_exit_arcs(arc_20)
+    transition_9.add_entry_arcs(arc_21)
+    transition_9.add_exit_arcs(arc_22)
+    petri_node_1.add_arc(arc_1)
+    petri_node_2.add_arc(arc_4)
+    petri_node_3.add_arc(arc_5)
+    petri_node_4.add_arc(arc_7)
+    petri_node_4.add_arc(arc_8)
+    petri_node_4.add_arc(arc_9)
+    petri_node_4.add_arc(arc_10)
+    petri_node_5.add_arc(arc_12)
+    petri_node_6.add_arc(arc_15)
+    petri_node_7.add_arc(arc_16)
+    petri_node_8.add_arc(arc_19)
+    petri_node_9.add_arc(arc_21)
+    petri_node_1.add_transition(transition_1)
+    petri_node_2.add_transition(transition_2)
+    petri_node_3.add_transition(transition_2)
+    petri_node_4.add_transition(transition_3)
+    petri_node_4.add_transition(transition_4)
+    petri_node_4.add_transition(transition_5)
+    petri_node_4.add_transition(transition_7)
+    petri_node_5.add_transition(transition_6)
+    petri_node_6.add_transition(transition_6)
+    petri_node_7.add_transition(transition_6)
+    petri_node_8.add_transition(transition_8)
+    petri_node_9.add_transition(transition_9)
+    petri_nodes = []
+    petri_nodes.append(petri_node_1)
+    petri_nodes.append(petri_node_2)
+    petri_nodes.append(petri_node_3)
+    petri_nodes.append(petri_node_4)
+    petri_nodes.append(petri_node_5)
+    petri_nodes.append(petri_node_6)
+    petri_nodes.append(petri_node_7)
+    petri_nodes.append(petri_node_8)
+    petri_nodes.append(petri_node_9)
+    start_state_machine(petri_nodes, logger)
+    
+def start_state_machine(petri_nodes, logger):
+  logger.info(len(petri_nodes))
+  for x in range(20):
+    for pn in petri_nodes:
+      pn.fire_transitions()
+    
+    
+    
+class PetriNode:
+  
+  def __init__(self, name, capacity, logger, size=0):
+    self.capacity = capacity
+    self.current_size = size
+    self.name = name
+    self.transitions = [] 
+    self.arcs = []
+    self.fireable_transitions = []
+    self.logger = logger
+    
+    
+  def add_transition(self, transition):
+    self.transitions.append(transition)
+    
+  def add_arc(self, arc):
+    self.arcs.append(arc)
+    
+  def fire_transitions(self):
+    for transition in self.transitions:
+      self.fireable_transitions.append(transition.can_arcs_fire(self.logger))
+    for x in range(len(self.transitions)):
+      if self.fireable_transitions[x] is True:
+        # if self.current_size < self.arc[x].weight:
+          # continue
+        # else:
+        self.logger.info("Firing from {0}, using transition: {1}".format(self.name, self.transitions[x].name))
+        self.current_size -= self.arcs[x].weight
+        self.transitions[x].fire()
+      
+
+class Transition:
+  
+  def __init__(self, name):
+    self.name = name
+    self.entry_arcs = []
+    self.exit_arcs = []
+    
+  def add_exit_arcs(self, arc):
+    self.exit_arcs.append(arc)
+    
+  def add_entry_arcs(self, arc):
+    self.entry_arcs.append(arc)
+  
+  def can_arcs_fire(self, logger):
+    for arc in self.exit_arcs:
+      if arc.weight + arc.right_PetriNode.current_size < arc.right_PetriNode.capacity:
+        continue
+      else:
+        return False
+    for arc in self.entry_arcs:
+      if arc.weight > arc.left_PetriNode.current_size:
+        return False
+      else:
+        continue
+    return True
+  
+  def fire(self):
+    for arc in self.exit_arcs:
+      arc.right_PetriNode.current_size += arc.weight
+    
+    
+
+class Arc:
+  
+  def __init__(self, weight, l_pn, r_pn):
+    self.weight = weight
+    self.right_PetriNode = r_pn
+    self.left_PetriNode = l_pn
+    
+    
